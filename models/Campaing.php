@@ -43,6 +43,7 @@ class Campaing extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id'=>'USER_ID',
             'nombre' => 'Nombre',
             'fecha_inicio' => 'Fecha Inicio',
             'fecha_termino' => 'Fecha Termino',
@@ -57,5 +58,10 @@ class Campaing extends \yii\db\ActiveRecord
     public function getAdsets()
     {
         return $this->hasMany(Adsets::className(), ['id_campaing' => 'id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(Users::className(), ['id_campaing' => 'user_id']);
     }
 }

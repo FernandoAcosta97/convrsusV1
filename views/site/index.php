@@ -12,7 +12,7 @@ use yii\helpers\Html;
 
         <p class="lead">Prueba de Framework</p>
 
-        <p><?= Html::a("SIGNUP",['site/signup'],$options=['class'=>'btn btn-success bt-lg'])?></p>
+        <p><?= Html::a("SIGNUP",['site/register'],$options=['class'=>'btn btn-success bt-lg'])?></p>
     </div>
 
     <div class="body-content">

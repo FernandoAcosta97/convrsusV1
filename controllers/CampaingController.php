@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Campaing;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,17 @@ class CampaingController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                //CONTROL DE ACCESO Backend
+                'access'=>[
+                    'class'=>AccessControl::className(),
+                    'rules'=>[
+                        [
+                            'allow'=>true,
+                            'roles'=>['@']
+                        ]
+                    ]
+                ],
+                // ----------------------------------
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

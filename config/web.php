@@ -31,7 +31,19 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            //'useFileTransport' => true,
+
+            //CONFIGURACION PARA EL ENVIO DE CORREOS
+            'useFileTransport' => false,
+            'transport' => [
+                
+                'class'=>'Swift_SmtpTransport',
+                'hots'=> 'smtp.gmail.com',
+                'username'=>'teamtareadigital@gmail.com',
+                'password'=>'Fernando199724021015467593',
+                'port'=>'587',
+                'encryption'=>'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

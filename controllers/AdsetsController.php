@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AdsetsController implements the CRUD actions for Adsets model.
@@ -21,6 +22,17 @@ class AdsetsController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                //CONTROL DE ACCESO Backend
+                'access'=>[
+                    'class'=>AccessControl::className(),
+                    'rules'=>[
+                        [
+                            'allow'=>true,
+                            'roles'=>['@']
+                        ]
+                    ]
+                ],
+            //-----------------------------------------------------
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -62,10 +74,10 @@ class AdsetsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id_user)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id_user),
         ]);
     }
 

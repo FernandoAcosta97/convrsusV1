@@ -19,6 +19,13 @@ AppAsset::register($this);
 <head>
   <meta charset="<?= Yii::$app->charset ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!--acceso a google control de login  -->
+  <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id"
+        content="1087593195129-1r0g9i5pvra21i6jt8uf5mvu60439jdp.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- Fin de acceso a google -->
+
   <!-- Favicon -->
   <link rel="shortcut icon" href="../assets/images/favicon.ico" />
   <!-- Library / Plugin Css Build -->
@@ -43,34 +50,7 @@ AppAsset::register($this);
 
   <header>
     <?php
-    // NavBar::begin([
-    //   'brandLabel' => Yii::$app->name,
-    //   'brandUrl' => Yii::$app->homeUrl,
-    //   'options' => [
-    //     'class' => 'class="nav navbar navbar-expand-xl navbar-dark iq-navbar"',
-    //   ],
-    // ]);
-    // echo Nav::widget([
-    //   'options' => ['class' => 'navbar-nav'],
-    //   'items' => [
-    //     ['label' => 'Home', 'url' => ['/site/index']],
-    //     ['label' => 'About', 'url' => ['/site/about']],
-    //   //  ['label' => 'Contact', 'url' => ['/site/contact']],
-    //     ['label' => 'Asets', 'url' => ['/adsets/index']],
-    //     ['label' => 'Campaing', 'url' => ['/campaing/index']],
-    //     //['label' => 'Registro', 'url' => ['/user/index']],
-
-    //     Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
-    //       . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-    //       . Html::submitButton(
-    //         'Logout (' . Yii::$app->user->identity->username . ')',
-    //         ['class' => 'btn btn-link logout']
-    //       )
-    //       . Html::endForm()
-    //       . '</li>')
-    //   ],
-    // ]);
-    // NavBar::end();
+  
 
     ?>
     <nav class="nav navbar navbar-expand-xl navbar-light iq-navbar">
@@ -81,7 +61,7 @@ AppAsset::register($this);
           </svg>
         </button>
         <div class="col-lg-2 col-lg-3 navbar-brand">
-          <a href="../dashboard/index.html" class="d-flex">
+          <a href="./main.php" class="d-flex">
             <!--Logo start-->
             <svg width="30" class="" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor" />
@@ -110,49 +90,9 @@ AppAsset::register($this);
               </div>
               <button class="btn-close float-end"></button>
             </div>
-            <!-- Rutas del menu de navegacion -->
-            <!-- <ul class="navbar-nav">
-              <li class="nav-item"><a class="nav-link active" href="../dashboard/index-horizontal.html">
-                  Horizontal </a></li>
-              <li class="nav-item"><a class="nav-link " href="../dashboard/index-dual-horizontal.html">
-                  Dual Horizontal </a></li>
-              <li class="nav-item"><a class="nav-link " href="../dashboard/index-dual-compact.html"><span class="item-name">Dual Compact</span></a></li>
-              <li class="nav-item"><a class="nav-link " href="../dashboard/index-boxed.html"> Boxed
-                  Horizontal </a></li>
-              <li class="nav-item"><a class="nav-link " href="../dashboard/index-boxed-fancy.html"> Boxed
-                  Fancy</a></li>
-            </ul> -->
+
+
             <?php
-            // NavBar::begin([
-            //   'brandLabel' => Yii::$app->name,
-            //   'brandUrl' => Yii::$app->homeUrl,
-            //   'options' => [
-            //     'class' => 'class="nav navbar navbar-expand-xl navbar-dark iq-navbar"',
-            //   ],
-            // ]);
-            // echo Nav::widget([
-            //   'options' => ['class' => 'navbar-nav'],
-            //   'items' => [
-            //     ['label' => 'Home', 'url' => ['/site/index']],
-            //     ['label' => 'About', 'url' => ['/site/about']],
-            //   //  ['label' => 'Contact', 'url' => ['/site/contact']],
-            //     ['label' => 'Asets', 'url' => ['/adsets/index']],
-            //     ['label' => 'Campaing', 'url' => ['/campaing/index']],
-            //     //['label' => 'Registro', 'url' => ['/user/index']],
-
-            //     Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
-            //       . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-            //       . Html::submitButton(
-            //         'Logout (' . Yii::$app->user->identity->username . ')',
-            //         ['class' => 'btn btn-link logout']
-            //       )
-            //       . Html::endForm()
-            //       . '</li>')
-            //   ],
-            // ]);
-            // NavBar::end();
-
-            ?><?php
       NavBar::begin([
         // 'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
@@ -165,15 +105,23 @@ AppAsset::register($this);
         'items' => [
           ['label' => 'Home', 'url' => ['/site/index']],
           ['label' => 'About', 'url' => ['/site/about']],
-          ['label' => 'Contact', 'url' => ['/site/contact']],
-          ['label' => 'Asets', 'url' => ['/adsets/index']],
-          ['label' => 'Campaing', 'url' => ['/campaing/index']],
-          ['label' => 'Registro', 'url' => ['/site/signup']],
+          
+
+          //Ocultando vista de campañas si no esta logueado
+          (!Yii::$app->user->isGuest)?(
+            ['label' => 'Campaing', 'url' => ['/campaing/index']])
+            :(""),
+          (!Yii::$app->user->isGuest)?(
+            ['label' => 'Asets', 'url' => ['/adsets/index']])
+            :(""),
+          //------------------------
+        
+            ['label' => 'Registro', 'url' => ['/site/register']],
           Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
               'Logout (' . Yii::$app->user->identity->username . ')',
-              ['class' => 'btn btn-link logout']
+              ['class' => 'btn btn-link logout bg-info']
             )
             . Html::endForm()
             . '</li>')
@@ -196,17 +144,26 @@ AppAsset::register($this);
             <!--Tener en cuenta para el manejo de las vistas para el dashboard  -->
            <ol class="container container-fluid">
            <?= $content ?>
-           <br>after
+           
            </ol>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
         </nav>
   </main>
 
-  <!-- <footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-      <p class="float-left">&copy; My Company <?= date('Y') ?></p>
-      <p class="float-right"><?= Yii::powered() ?></p>
-    </div>
-  </footer> -->
   <footer class="footer mt-auto py-3 text-muted">
     <div class="footer-body">
       <ul class="left-panel list-inline mb-0 p-0">

@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
@@ -33,9 +33,28 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
 
         <div class="form-group">
-            <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+        <div class="offset-lg-1 col-lg-11">
+            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        </div>
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+        <script>
+        function onSignIn(googleUser) {
+
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+        }
+        </script>
+    </div>
         </div>
 
     <?php ActiveForm::end(); ?>
